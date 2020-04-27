@@ -1,6 +1,6 @@
 (function() {
   let likesArray = [];
-  const LOOP_COUNT = 100;
+  const LOOP_COUNT = 3;
   const WEBSITE = "https://www.instagram.com";
 
   function getFormattedDate() {
@@ -54,6 +54,19 @@
       return result * sortOrder;
     };
   }
+
+  function convertToNumber(value) {
+    // remove whitespace
+    value = value.replace(/ /g, "");
+    value = value.replace(/,/g, "");
+
+    if (value.indexOf("k") > 0) {
+      value = value.replace(/k/g, "");
+      value = parseFloat(value) * 1000;
+    }
+    return value;
+  }
+
   function grabLikes() {
     function simulateMouseover() {
       let i = 0;
@@ -92,22 +105,21 @@
       for (i = 0; i < anchors.length; i++) {
         let hrefValue = anchors[i].getAttribute("href");
         let likeCount = anchors[i].querySelector(".qn-0x li:first-child");
+        let commentCount = anchors[i].querySelector(".qn-0x li:nth-child(2)");
 
-        let value = likeCount.innerText;
+        likeCount = likeCount.innerText;
 
-        // remove whitespace
-        value = value.replace(/ /g, "");
-        value = value.replace(/,/g, "");
+        likeCount = convertToNumber(likeCount);
 
-        if (value.indexOf("k") > 0) {
-          value = value.replace(/k/g, "");
-          value = parseFloat(value) * 1000;
-        }
+        commentCount = commentCount.innerText;
+
+        commentCount = convertToNumber(commentCount);
 
         //         console.log(value)
         likesArray.push({
           href: WEBSITE + hrefValue,
-          likes: parseInt(value)
+          likeCount: parseInt(likeCount),
+          commentCount: parseInt(commentCount)
         });
       }
     }
