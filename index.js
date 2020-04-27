@@ -59,8 +59,8 @@
     }
     return function(a, b) {
       /* next line works with strings and numbers,
-       * and you may want to customize it to your needs
-       */
+       * and you may want to customize it to your needs */
+
       var result =
         b[property] < a[property] ? -1 : b[property] > a[property] ? 1 : 0;
       return result * sortOrder;
@@ -75,6 +75,9 @@
     if (value.indexOf("k") > 0) {
       value = value.replace(/k/g, "");
       value = parseFloat(value) * 1000;
+    } else if (value.indexOf("m") > 0) {
+      value = value.replace(/m/g, "");
+      value = parseFloat(value) * 1000000;
     }
     return value;
   }
