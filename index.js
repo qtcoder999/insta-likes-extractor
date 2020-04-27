@@ -18,9 +18,21 @@
     min = (min < 10 ? "0" : "") + min;
     sec = (sec < 10 ? "0" : "") + sec;
 
-    //     var str = date.getFullYear() + "-" + month + "-" + day + "_" +  hour + ":" + min + ":" + sec;
+    var str =
+      "Timestamp - " +
+      day +
+      "-" +
+      month +
+      "-" +
+      date.getFullYear() +
+      "_" +
+      hour +
+      ":" +
+      min +
+      ":" +
+      sec;
 
-    var str = "Time - " + hour + ":" + min + ":" + sec;
+    //         var str = "Time - " + hour + ":" + min + ":" + sec;
 
     return str;
   }
@@ -92,8 +104,7 @@
           columnNumber +
           ") > a > div.eLAPa";
         var locaterHandle = document.querySelector(cssSelector);
-
-        var canceled = !locaterHandle.dispatchEvent(event);
+        if (locaterHandle) var canceled = !locaterHandle.dispatchEvent(event);
       }
     }
 
@@ -133,8 +144,6 @@
 
   // console.clear();
 
-  console.log(getFormattedDate());
-
   async function scrollToBottom() {
     return new Promise((resolve, reject) => {
       window.scrollTo(0, document.body.scrollHeight);
@@ -152,8 +161,12 @@
   (async function() {
     try {
       console.clear();
+      console.log(window.location.href);
+      console.log(getFormattedDate());
+
       await main();
     } catch (e) {
+      console.log(e);
     } finally {
       const output = removeDuplicates(likesArray);
       console.log(JSON.stringify(output, null, "\t"));
