@@ -128,7 +128,7 @@
 
     getValuesFromCards();
 
-    likesArray.sort(dynamicSort("likes"));
+    likesArray.sort(dynamicSort("likeCount"));
   }
 
   // console.clear();
