@@ -222,8 +222,7 @@
     } catch (e) {
       console.log(e);
     } finally {
-      //             const output = removeDuplicates(likesArray);
-      //             console.log("Result:", JSON.stringify(output, null, "\t"));
+      debouncedPrintOutput();
     }
   })();
 })();
