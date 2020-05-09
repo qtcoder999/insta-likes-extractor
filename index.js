@@ -1,12 +1,10 @@
 (function() {
   let likesArray = [];
-  const LOOP_COUNT = 35;
   const WEBSITE = "https://www.instagram.com";
-  let watchedElement = document.querySelector("article.ySN3v");
-  const DEBOUNCED_RATE = 3000;
+  const watchedElement = document.querySelector("article.ySN3v");
+  const DEBOUNCED_RATE = 2000;
 
   function debounce(a, b, c) {
-    console.log("debounceCalled");
     var d;
     return function() {
       var e = this,
@@ -197,19 +195,16 @@
     });
   }
 
-  // Observe a specific DOM element:
   observeDOM(watchedElement, async function(m) {
-    debouncedPrintOutput();
-    await grabLikes();
-    await scrollToBottom();
+    await main();
   });
 
   const printOutput = () => {
-    alert();
     const output = removeDuplicates(likesArray);
     console.log(JSON.stringify(output, null, "\t"));
   };
-  const debouncedPrintOutput = () => debounce(printOutput, DEBOUNCED_RATE);
+
+  const debouncedPrintOutput = debounce(printOutput, DEBOUNCED_RATE);
 
   async function main() {
     debouncedPrintOutput();
