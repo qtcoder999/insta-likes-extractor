@@ -1,7 +1,46 @@
 (function() {
   let likesArray = [];
-  const LOOP_COUNT = 3;
   const WEBSITE = "https://www.instagram.com";
+  const watchedElement = document.querySelector("article.ySN3v");
+  const DEBOUNCED_RATE = 2000;
+
+  function debounce(a, b, c) {
+    var d;
+    return function() {
+      var e = this,
+        f = arguments;
+      clearTimeout(d),
+        (d = setTimeout(function() {
+          (d = null), c || a.apply(e, f);
+        }, b)),
+        c && !d && a.apply(e, f);
+    };
+  }
+
+  const observeDOM = (function() {
+    var MutationObserver =
+      window.MutationObserver || window.WebKitMutationObserver;
+
+    return function(obj, callback) {
+      if (!obj || !obj.nodeType === 1) return;
+      // validation
+
+      if (MutationObserver) {
+        // define a new observer
+        var obs = new MutationObserver(function(mutations, observer) {
+          callback(mutations);
+        });
+        // have the observer observe foo for changes in children
+        obs.observe(obj, {
+          childList: true,
+          subtree: true
+        });
+      } else if (window.addEventListener) {
+        obj.addEventListener("DOMNodeInserted", callback, false);
+        obj.addEventListener("DOMNodeRemoved", callback, false);
+      }
+    };
+  })();
 
   function getFormattedDate() {
     var date = new Date();
@@ -50,7 +89,6 @@
 
     return uniqueArray;
   }
-
   function dynamicSort(property) {
     var sortOrder = 1;
     if (property[0] === "-") {
@@ -82,7 +120,7 @@
     return value;
   }
 
-  function grabLikes() {
+  async function grabLikes() {
     function simulateMouseover() {
       let i = 0;
 
@@ -137,12 +175,15 @@
         });
       }
     }
+    return new Promise(resolve => {
+      simulateMouseover();
 
-    simulateMouseover();
+      getValuesFromCards();
 
-    getValuesFromCards();
+      likesArray.sort(dynamicSort("likeCount"));
 
-    likesArray.sort(dynamicSort("likeCount"));
+      resolve();
+    });
   }
 
   // console.clear();
@@ -154,11 +195,21 @@
     });
   }
 
+  observeDOM(watchedElement, async function(m) {
+    await main();
+  });
+
+  const printOutput = () => {
+    const output = removeDuplicates(likesArray);
+    console.log(JSON.stringify(output, null, "\t"));
+  };
+
+  const debouncedPrintOutput = debounce(printOutput, DEBOUNCED_RATE);
+
   async function main() {
-    for (let j = 0; j < LOOP_COUNT; j++) {
-      grabLikes();
-      await scrollToBottom();
-    }
+    debouncedPrintOutput();
+    await grabLikes();
+    await scrollToBottom();
   }
 
   (async function() {
@@ -171,8 +222,7 @@
     } catch (e) {
       console.log(e);
     } finally {
-      const output = removeDuplicates(likesArray);
-      console.log(JSON.stringify(output, null, "\t"));
+      debouncedPrintOutput();
     }
   })();
 })();
