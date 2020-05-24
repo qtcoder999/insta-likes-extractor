@@ -2,7 +2,7 @@
   let likesArray = [];
   const WEBSITE = "https://www.instagram.com";
   const watchedElement = document.querySelector("article.ySN3v");
-  const DEBOUNCED_RATE = 2000;
+  const DEBOUNCED_RATE = 3000;
 
   function debounce(a, b, c) {
     var d;
