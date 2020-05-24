@@ -31,40 +31,8 @@
     };
   })();
 
-  function getFormattedDate() {
-    var date = new Date();
-
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-    var hour = date.getHours();
-    var min = date.getMinutes();
-    var sec = date.getSeconds();
-
-    month = (month < 10 ? "0" : "") + month;
-    day = (day < 10 ? "0" : "") + day;
-    hour = (hour < 10 ? "0" : "") + hour;
-    min = (min < 10 ? "0" : "") + min;
-    sec = (sec < 10 ? "0" : "") + sec;
-
-    var str =
-      "Timestamp - " +
-      day +
-      "-" +
-      month +
-      "-" +
-      date.getFullYear() +
-      "_" +
-      hour +
-      ":" +
-      min +
-      ":" +
-      sec;
-
-    //         var str = "Time - " + hour + ":" + min + ":" + sec;
-
-    return str;
-  }
-
+  function getFormattedDate(){var e=new Date,t=e.getMonth()+1,a=e.getDate(),g=e.getHours(),n=e.getMinutes(),r=e.getSeconds();return g=(g<10?"0":"")+g,n=(n<10?"0":"")+n,r=(r<10?"0":"")+r,"Timestamp - "+(a=(a<10?"0":"")+a)+"-"+(t=(t<10?"0":"")+t)+"-"+e.getFullYear()+"_"+g+":"+n+":"+r}
+  
   function removeDuplicates(arr) {
     const uniqueArray = arr.filter((thing, index) => {
       const _thing = JSON.stringify(thing);
