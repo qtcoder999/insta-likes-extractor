@@ -4,18 +4,7 @@
   const watchedElement = document.querySelector("article.ySN3v");
   const DEBOUNCED_RATE = 3000;
 
-  function debounce(a, b, c) {
-    var d;
-    return function() {
-      var e = this,
-        f = arguments;
-      clearTimeout(d),
-        (d = setTimeout(function() {
-          (d = null), c || a.apply(e, f);
-        }, b)),
-        c && !d && a.apply(e, f);
-    };
-  }
+  function debounce(n,t,u){var e;return function(){var i=this,o=arguments;clearTimeout(e),e=setTimeout(function(){e=null,u||n.apply(i,o)},t),u&&!e&&n.apply(i,o)}}
 
   const observeDOM = (function() {
     var MutationObserver =
