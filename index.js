@@ -27,9 +27,8 @@
             if (MutationObserver) {
                 // define a new observer
                 var obs = new MutationObserver(function(mutations, observer) {
-                    console.log("Disconnect status ", disconnect)
-                    if (!disconnect) {
-                      
+                   
+                    if (!disconnect) {   
                         callback(mutations);
                     } else {
                         observer.disconnect();
