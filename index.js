@@ -46,21 +46,8 @@
 
     return uniqueArray;
   }
-  function dynamicSort(property) {
-    var sortOrder = 1;
-    if (property[0] === "-") {
-      sortOrder = -1;
-      property = property.substr(1);
-    }
-    return function(a, b) {
-      /* next line works with strings and numbers,
-       * and you may want to customize it to your needs */
-
-      var result =
-        b[property] < a[property] ? -1 : b[property] > a[property] ? 1 : 0;
-      return result * sortOrder;
-    };
-  }
+  
+  function dynamicSort(n){var r=1;return"-"===n[0]&&(r=-1,n=n.substr(1)),function(t,u){return(u[n]<t[n]?-1:u[n]>t[n]?1:0)*r}}
 
   function convertToNumber(value) {
     // remove whitespace
