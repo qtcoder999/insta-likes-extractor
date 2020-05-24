@@ -33,19 +33,7 @@
 
   function getFormattedDate(){var e=new Date,t=e.getMonth()+1,a=e.getDate(),g=e.getHours(),n=e.getMinutes(),r=e.getSeconds();return g=(g<10?"0":"")+g,n=(n<10?"0":"")+n,r=(r<10?"0":"")+r,"Timestamp - "+(a=(a<10?"0":"")+a)+"-"+(t=(t<10?"0":"")+t)+"-"+e.getFullYear()+"_"+g+":"+n+":"+r}
   
-  function removeDuplicates(arr) {
-    const uniqueArray = arr.filter((thing, index) => {
-      const _thing = JSON.stringify(thing);
-      return (
-        index ===
-        arr.findIndex(obj => {
-          return JSON.stringify(obj) === _thing;
-        })
-      );
-    });
-
-    return uniqueArray;
-  }
+  function removeDuplicates(n){return n.filter((i,r)=>{const t=JSON.stringify(i);return r===n.findIndex(n=>JSON.stringify(n)===t)})}
   
   function dynamicSort(n){var r=1;return"-"===n[0]&&(r=-1,n=n.substr(1)),function(t,u){return(u[n]<t[n]?-1:u[n]>t[n]?1:0)*r}}
 
