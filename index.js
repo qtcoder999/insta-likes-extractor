@@ -220,11 +220,7 @@
         }
 
     }
-
-    //     function convertArrayToCSV(rows) {
-    //         debugger ;return ("data:text/csv;charset=utf-8," + rows.map(e=>e.join(",")).join("\n"));
-    //     }
-
+    
     function convertToCSV(objArray) {
         var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
         var str = '';
