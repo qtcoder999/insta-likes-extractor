@@ -103,7 +103,7 @@
         return value;
     }
 
-    function stopExecutionOnTooMuchDelay(){
+    function stopExecutionOnTooMuchDelay() {
         throw new Error('Request Timeout');
     }
 
@@ -196,15 +196,71 @@
         await main();
     });
 
+    function downloadFile(exportedFileName, csv) {
+
+        var blob = new Blob([csv],{
+            type: 'text/csv;charset=utf-8;'
+        });
+        if (navigator.msSaveBlob) {
+            // IE 10+
+            navigator.msSaveBlob(blob, exportedFileName);
+        } else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) {
+                // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", exportedFileName);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+
+    }
+
+    //     function convertArrayToCSV(rows) {
+    //         debugger ;return ("data:text/csv;charset=utf-8," + rows.map(e=>e.join(",")).join("\n"));
+    //     }
+
+    function convertToCSV(objArray) {
+        var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+        var str = '';
+        
+        // insert headers
+        const headers = Object.keys(objArray[0]).join(',');
+        str = headers + "\r\n";
+                
+        for (var i = 0; i < array.length; i++) {
+            var line = '';
+            for (var index in array[i]) {
+                if (line != '')
+                    line += ','
+
+                line += array[i][index];
+            }
+
+            str += line + '\r\n';
+        }
+
+        return str;
+    }
+
     const printOutput = ()=>{
+
+        disconnect = true;
+
         const output = removeDuplicates(likesArray);
         console.log(JSON.stringify(output, null, "\t"));
-        disconnect = true;
+
+        const CSV = convertToCSV(output);
+
+        downloadFile("Result.csv", CSV);
     }
-    ;
 
     const debouncedPrintOutput = debounce(printOutput, DEBOUNCED_RATE);
-
 
     async function main() {
         debouncedPrintOutput();
