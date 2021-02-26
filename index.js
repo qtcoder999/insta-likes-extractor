@@ -139,6 +139,13 @@
                 let hrefValue = anchors[i].getAttribute("href");
                 let likeCount = anchors[i].querySelector(".qn-0x li:first-child");
                 let commentCount = anchors[i].querySelector(".qn-0x li:nth-child(2)");
+                let postType = anchors[i].querySelector("div.u7YqG");
+
+                if (postType != null && postType != undefined) {
+                    postType = "video";
+                } else{
+                    postType = "photo";
+                }
 
                 if (likeCount != null && likeCount != undefined) {
 
@@ -163,7 +170,8 @@
                 likesArray.push({
                     href: WEBSITE + hrefValue,
                     likeCount: parseInt(likeCount),
-                    commentCount: parseInt(commentCount)
+                    commentCount: parseInt(commentCount),
+                    postType
                 });
             }
         }
@@ -220,7 +228,11 @@
         }
 
     }
-    
+
+    //     function convertArrayToCSV(rows) {
+    //         debugger ;return ("data:text/csv;charset=utf-8," + rows.map(e=>e.join(",")).join("\n"));
+    //     }
+
     function convertToCSV(objArray) {
         var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
         var str = '';
