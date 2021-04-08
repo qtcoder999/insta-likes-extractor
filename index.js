@@ -3,7 +3,7 @@
 	const WEBSITE = "https://www.instagram.com";
 	const watchedElement = document.querySelector("article.ySN3v");
 	const DEBOUNCED_RATE = 4000;
-	const DEBOUNCED_EXCEPTION_RATE = 100000;
+	const DEBOUNCED_EXCEPTION_RATE = 10000;
 	let disconnect = false;
 
 	const selectors = {
