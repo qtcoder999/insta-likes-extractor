@@ -6,6 +6,29 @@
 	const DEBOUNCED_EXCEPTION_RATE = 100000;
 	let disconnect = false;
 
+	const selectors = {
+        delimiter: "¬",
+        pagesData: [ {
+            pageType: "posts",
+            route: "/",
+            row: "#react-root > section > main > div > div._2z6nI > article > div:nth-child(1) > div div.Nnq7C.weEfm",
+            column: "#react-root > section > main > div > div._2z6nI > article > div:nth-child(1) > div > div:nth-child(¬) > div:nth-child(¬) > a > div.eLAPa",
+            anchors: "main > div > div._2z6nI > article > div:nth-child(1) > div div div > a",
+		    likeCount: ".qn-0x li:first-child",
+			commentCount: ".qn-0x li:nth-child(2)",
+			postType: "div.u7YqG"
+        },
+        {
+            pageType: "reels",
+            route: "/reels",
+            row: "#react-root > section > main > div > div._2z6nI > div > div > div > div.Nnq7C.ryi-h",
+            column: "#react-root > section > main > div > div._2z6nI > div > div > div > div:nth-child(¬) > div:nth-child(¬) > div > a > div.lVhHa._hpij",
+            anchors: "#react-root > section > main > div > div._2z6nI > div > div > div > div div > div > a",
+		    likeCount: ".qn-0x li:first-child",
+			commentCount: ".qn-0x li:nth-child(2)",
+        }]
+    }
+
 	function debounce(n, t, u) {
 		var e;
 		return function() {
@@ -19,6 +42,15 @@
 				u && !e && n.apply(i, o)
 		}
 	}
+
+	function determinPageType(){
+	    var url = window.location.href.split('?')[0];
+
+        var final = url.substr(url.lastIndexOf('/') + 1);
+
+
+	}
+
 	const observeDOM = (function() {
 		var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 		return function(obj, callback) {
@@ -204,9 +236,13 @@
 	const printOutput = () => {
 		disconnect = true;
 		const output = removeDuplicates(likesArray);
-		console.log(JSON.stringify(output, null, "\t"));
-		const CSV = convertToCSV(output);
-		downloadFile("Result.csv", CSV);
+		if(output.length){
+    		console.log(JSON.stringify(output, null, "\t"));
+            const CSV = convertToCSV(output);
+            downloadFile("Result.csv", CSV);    
+		}else{
+		    console.log("No output!")
+		}
 	}
 	const debouncedPrintOutput = debounce(printOutput, DEBOUNCED_RATE);
 	async function main() {
