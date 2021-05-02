@@ -103,6 +103,10 @@
             value = value.replace(/m/g, "");
             value = parseFloat(value) * 1000000;
         }
+        else if (value.indexOf("b") > 0) {
+            value = value.replace(/b/g, "");
+            value = parseFloat(value) * 1000000000;
+        }
         return value;
     }
 
