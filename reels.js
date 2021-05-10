@@ -7,6 +7,7 @@
     let disconnect = false;
 
     let CSS_Selectors = {
+        pageTitle: "#react-root > section > main > div > header > section > div.nZSzR > h2",
         pageType: "reels",
         route: "/reels",
         row: "#react-root > section > main > div > div._2z6nI > div > div > div > div.Nnq7C.ryi-h",
@@ -183,7 +184,13 @@
         }
         );
     }
+    
+    function getPageTitle() {
+		return ((document.querySelector(CSS_Selectors.pageTitle).textContent || "Result") + ".csv")
+	}
+    
     debouncedStopExecution();
+    
     observeDOM(watchedElement, async function(m) {
         debouncedStopExecution();
         await main();
@@ -234,9 +241,11 @@
         const output = removeDuplicates(likesArray);
         console.log(JSON.stringify(output, null, "\t"));
         const CSV = convertToCSV(output);
-        downloadFile("Result.csv", CSV);
+        downloadFile(getPageTitle() + getFormattedDate(), CSV);
     }
+    
     const debouncedPrintOutput = debounce(printOutput, DEBOUNCED_RATE);
+    
     async function main() {
         debouncedPrintOutput();
         await grabLikes();
