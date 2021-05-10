@@ -172,7 +172,7 @@
 	}
 
 	function getPageTitle() {
-		return ((document.querySelector(CSS_Selectors.pageTitle.textContent) || "Result") + "_" + getFormattedDate() + ".csv")
+		return (((document.querySelector(CSS_Selectors.pageTitle).textContent) || "Result") + "_" + getFormattedDate() + ".csv")
 	}
 	debouncedStopExecution();
 	observeDOM(watchedElement, async function(m) {
