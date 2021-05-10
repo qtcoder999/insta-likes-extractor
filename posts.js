@@ -172,9 +172,11 @@
 	}
 
 	function getPageTitle() {
-		return ((document.querySelector(CSS_Selectors.pageTitle) || "Result") + ".csv")
+		return ((document.querySelector(CSS_Selectors.pageTitle).textContent || "Result") + ".csv")
 	}
+	
 	debouncedStopExecution();
+	
 	observeDOM(watchedElement, async function(m) {
 		debouncedStopExecution();
 		await main();
@@ -219,6 +221,7 @@
 		}
 		return str;
 	}
+	
 	const printOutput = () => {
 		disconnect = true;
 		const output = removeDuplicates(likesArray);
@@ -226,7 +229,9 @@
 		const CSV = convertToCSV(output);
 		downloadFile(getPageTitle() + getFormattedDate(), CSV);
 	}
+	
 	const debouncedPrintOutput = debounce(printOutput, DEBOUNCED_RATE);
+	
 	async function main() {
 			debouncedPrintOutput();
 			await grabLikes();
