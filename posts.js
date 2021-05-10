@@ -67,7 +67,7 @@
 			r = e.getSeconds();
 		return g = (g < 10 ? "0" : "") + g,
 			n = (n < 10 ? "0" : "") + n,
-			r = (r < 10 ? "0" : "") + r, "Timestamp - " + (a = (a < 10 ? "0" : "") + a) + "-" + (t = (t < 10 ? "0" : "") + t) + "-" + e.getFullYear() + "_" + g + ":" + n + ":" + r
+			r = (r < 10 ? "0" : "") + r, (a = (a < 10 ? "0" : "") + a) + "-" + (t = (t < 10 ? "0" : "") + t) + "-" + e.getFullYear() + "_" + g + ":" + n + ":" + r
 	}
 
 	function removeDuplicates(n) {
@@ -172,11 +172,9 @@
 	}
 
 	function getPageTitle() {
-		return ((document.querySelector(CSS_Selectors.pageTitle).textContent || "Result") + ".csv")
+		return ((document.querySelector(CSS_Selectors.pageTitle.textContent) || "Result") + "_" + getFormattedDate() + ".csv")
 	}
-	
 	debouncedStopExecution();
-	
 	observeDOM(watchedElement, async function(m) {
 		debouncedStopExecution();
 		await main();
@@ -221,17 +219,14 @@
 		}
 		return str;
 	}
-	
 	const printOutput = () => {
 		disconnect = true;
 		const output = removeDuplicates(likesArray);
 		console.log(JSON.stringify(output, null, "\t"));
 		const CSV = convertToCSV(output);
-		downloadFile(getPageTitle() + getFormattedDate(), CSV);
+		downloadFile(getPageTitle(), CSV);
 	}
-	
 	const debouncedPrintOutput = debounce(printOutput, DEBOUNCED_RATE);
-	
 	async function main() {
 			debouncedPrintOutput();
 			await grabLikes();
@@ -241,7 +236,7 @@
 			try {
 				console.clear();
 				console.log(window.location.href);
-				console.log(getFormattedDate());
+				console.log("Timestamp - " + getFormattedDate());
 				await main();
 			} catch (e) {
 				console.log(e);
